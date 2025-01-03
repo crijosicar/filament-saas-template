@@ -24,8 +24,8 @@ class SysadminPanelServiceProvider extends PanelProvider
     {
         return $panel
             ->id('sysadmin')
-            ->homeUrl(config('filament-saas.site_path'))
-            ->path(config('filament-saas.sysadmin_path'))
+            ->homeUrl('/')
+            ->path('sysadmin')
             ->authGuard('web')
             ->login()
             // ->registration(\A2Insights\FilamentSaas\User\Filament\Pages\Register::class)

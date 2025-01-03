@@ -53,8 +53,8 @@ class TenantPanelServiceProvider extends PanelProvider
     {
         return $panel
             ->id('admin')
-            ->path(config('filament-saas.tenant_path'))
-            ->homeUrl(config('filament-saas.site_path'))
+            ->homeUrl('/admin')
+            ->path('admin')
             ->default()
             ->login(Login::class)
             ->registration($this->registrationIsEnabled())
