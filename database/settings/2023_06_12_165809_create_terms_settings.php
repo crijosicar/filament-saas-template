@@ -6,8 +6,8 @@ return new class extends SettingsMigration
 {
     public function up(): void
     {
-        $this->migrator->add('terms_settings.service', $this->termsOfService());
-        $this->migrator->add('terms_settings.privacy_policy', $this->privacyPolicy());
+        $this->migrator->add('terms_settings.service', null);
+        $this->migrator->add('terms_settings.privacy_policy', null);
     }
 
     private function termsOfService(): string
