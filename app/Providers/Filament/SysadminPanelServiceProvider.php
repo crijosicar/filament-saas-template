@@ -10,6 +10,7 @@ use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
+use Filament\Support\Enums\Platform;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -28,12 +29,9 @@ class SysadminPanelServiceProvider extends PanelProvider
             ->path('sysadmin')
             ->authGuard('web')
             ->login()
-            // ->registration(\A2Insights\FilamentSaas\User\Filament\Pages\Register::class)
             ->passwordReset()
             ->emailVerification()
-            ->profile()
             ->sidebarCollapsibleOnDesktop()
-            // ->sidebarFullyCollapsibleOnDesktop()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
@@ -47,6 +45,7 @@ class SysadminPanelServiceProvider extends PanelProvider
             ->databaseNotifications()
             ->databaseNotificationsPolling('30s')
             ->plugins([
+                \Kenepa\Banner\BannerPlugin::make()->persistsBannersInDatabase(),
                 \Awcodes\FilamentQuickCreate\QuickCreatePlugin::make()
                     ->includes([
                         \A2Insights\FilamentSaas\User\Filament\UserResource::class,
@@ -90,6 +89,7 @@ class SysadminPanelServiceProvider extends PanelProvider
                 \A2Insights\FilamentSaas\Features\FeaturesPlugin::make(),
                 \A2Insights\FilamentSaas\Settings\SettingsPlugin::make(),
                 \A2Insights\FilamentSaas\System\SystemPlugin::make(),
+                \A21ns1g4ts\FilamentShortUrl\FilamentShortUrlPlugin::make(),
             ])
             ->widgets([
                 // Widgets\AccountWidget::class,
@@ -111,6 +111,12 @@ class SysadminPanelServiceProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
                 \Cog\Laravel\Ban\Http\Middleware\ForbidBannedUser::class,
-            ]);
+            ])
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
+            ->globalSearchFieldSuffix(fn (): ?string => match (Platform::detect()) {
+                Platform::Windows, Platform::Linux => 'CTRL+K',
+                Platform::Mac => '⌘K',
+                default => null,
+            });
     }
 }
