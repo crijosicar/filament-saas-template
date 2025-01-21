@@ -89,7 +89,6 @@ class SysadminPanelServiceProvider extends PanelProvider
                 \A2Insights\FilamentSaas\Features\FeaturesPlugin::make(),
                 \A2Insights\FilamentSaas\Settings\SettingsPlugin::make(),
                 \A2Insights\FilamentSaas\System\SystemPlugin::make(),
-                \A21ns1g4ts\FilamentShortUrl\FilamentShortUrlPlugin::make(),
             ])
             ->widgets([
                 // Widgets\AccountWidget::class,

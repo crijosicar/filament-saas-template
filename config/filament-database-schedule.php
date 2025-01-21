@@ -49,7 +49,7 @@ return [
          * By default, all commands possible to be used with "php artisan" will be shown, this parameter excludes from
          * the list commands that you do not want to show for the schedule.
          */
-        'exclude' => [ //regex
+        'exclude' => [ // regex
             'help',
             'list',
             'test',

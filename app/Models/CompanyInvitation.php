@@ -2,6 +2,27 @@
 
 namespace App\Models;
 
-use A2Insights\FilamentSaas\Tenant\CompanyInvitation as TenantCompanyInvitation;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Wallo\FilamentCompanies\FilamentCompanies;
 
-class CompanyInvitation extends TenantCompanyInvitation {}
+class CompanyInvitation extends Model
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'email',
+        'role',
+    ];
+
+    /**
+     * Get the company that the invitation belongs to.
+     */
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(FilamentCompanies::companyModel());
+    }
+}
