@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 use Wallo\FilamentCompanies\Events\CompanyCreated;
 use Wallo\FilamentCompanies\Events\CompanyDeleted;
 use Wallo\FilamentCompanies\Events\CompanyUpdated;
 use Wallo\FilamentCompanies\FilamentCompanies;
 
-class Company extends BaseTenant
+class Company extends BaseTenant implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
 
     protected $table = 'companies';
 
