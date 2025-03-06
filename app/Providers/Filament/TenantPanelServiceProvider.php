@@ -6,7 +6,6 @@ use A2Insights\FilamentSaas\Features\Features;
 use A2Insights\FilamentSaas\Tenant\Http\Middleware\TenancyInitialize;
 use A2Insights\FilamentSaas\User\Filament\Components\Phone;
 use A2Insights\FilamentSaas\User\Filament\Components\Username;
-use A2Insights\FilamentSaas\User\Filament\Pages\TenantRegister;
 use A2Insights\FilamentSaas\User\Filament\Pages\TentantUserProfilePage;
 use App\Actions\FilamentCompanies\AddCompanyEmployee;
 use App\Actions\FilamentCompanies\CreateConnectedAccount;
@@ -28,6 +27,7 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
+use Filament\Pages\Auth\Register;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Enums\Platform;
@@ -58,7 +58,7 @@ class TenantPanelServiceProvider extends PanelProvider
             ->path('admin')
             ->default()
             ->login(Login::class)
-            ->registration($this->registrationIsEnabled())
+            ->registration($this->getRegistrationPage())
             ->passwordReset()
             ->emailVerification()
             ->profile()
@@ -218,14 +218,14 @@ class TenantPanelServiceProvider extends PanelProvider
     }
 
     // TODO: Not use cached features.
-    private function registrationIsEnabled()
+    private function getRegistrationPage(): ?string
     {
         try {
             $features = cache('filament-saas.features') ?? App::make(Features::class);
 
-            return $features->auth_registration ? TenantRegister::class : false;
+            return $features->auth_registration ? Register::class : null;
         } catch (\Throwable $th) {
-            return false;
+            return null;
         }
     }
 }
