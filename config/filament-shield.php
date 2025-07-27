@@ -2,14 +2,15 @@
 
 return [
     'shield_resource' => [
-        'should_register_navigation' => false,
+        'should_register_navigation' => true,
         'slug' => 'shield/roles',
         'navigation_sort' => -1,
         'navigation_badge' => true,
         'navigation_group' => true,
+        'sub_navigation_position' => null,
         'is_globally_searchable' => false,
         'show_model_path' => true,
-        'is_scoped_to_tenant' => false,
+        'is_scoped_to_tenant' => true,
         'cluster' => null,
     ],
 
@@ -28,7 +29,7 @@ return [
 
     'panel_user' => [
         'enabled' => true,
-        'name' => 'user',
+        'name' => 'panel_user',
     ],
 
     'permission_prefixes' => [
